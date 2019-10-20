@@ -98,14 +98,14 @@ func (c classifier) probability(words []string, class string) float64 {
 		if wf, ok := c.words[w]; ok {
 			count = wf.counter[class]
 		}
-		prob *= (float64((count + 1)) / float64((c.totalWordCount(class) + c.totalDistinctWordCount())))
+		prob *= float64(count+1) / float64(c.totalWordCount(class)+c.totalDistinctWordCount())
 	}
 	for _, w := range words {
 		count := 0
 		if wf, ok := c.words[w]; ok {
-			count += (wf.counter[positive] + wf.counter[negative])
+			count += wf.counter[positive] + wf.counter[negative]
 		}
-		prob /= (float64((count + 1)) / float64((c.totalWordCount("") + c.totalDistinctWordCount())))
+		prob /= float64(count+1) / float64(c.totalWordCount("")+c.totalDistinctWordCount())
 	}
 	return prob
 }
